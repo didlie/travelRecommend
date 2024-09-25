@@ -11,18 +11,31 @@
   <li><a href="./travel_recommendation.html" id="home">Home </a></li>
   <li><a href="./contact_us.html" id="contact">Contact Us </a></li>
   <li><a href="./about_us.html" id="about">About Us </a></li>
-  <li><input type="text" id="conditionInput" placeholder="Enter destination...">  </li>
-  <li><button id='btnSearch'>Search</button> <button id='btnReset'>Clear</button></li>
 </ul>
 </nav>
 <div class="container">
-<div class="intro">
-<h1 class="introH1">Find Your Place in the World!</h1>
-<p class="introP">Get directions to what you want and what will make you happy</p>
-</div>
-<div class="searchCondition">
-    <div id="result"></div>
-</div>
+    <div class="intro">
+    <h1 class="introH1">Contact US</h1>
+    <p>201 E 77th St., NY, NY, 10001</p>
+    <p>emial: Someemail@thisSite.com</p>
+    <p>phone: 555-123-1212</p>
+    </div>
+    <div id="contact_form">
+        <h2>Provide Your Feedback</h2>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" placeholder="Your Name" required><br>
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" placeholder="Your Age" required><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" placeholder="Your Email" required><br>
+        <label for="job">Job:</label><br>
+        <input type="text" id="job" placeholder="Your Job" required><br>
+        <label for="designation">Designation:</label><br>
+        <input type="text" id="designation" placeholder="Your Designation" required><br>
+        <label for="feedbackText">Feedback:</label><br>
+        <textarea id="feedbackText" rows="5" cols="30" placeholder="Enter your feedback here" required></textarea><br>
+    <button id="submitBtn">Submit Feedback</button>
+    </div>
 </div>
 <script src="./travel_recommendation.js"></script>
 <div id="social">

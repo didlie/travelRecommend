@@ -1,6 +1,8 @@
 /* Basic CSS for the navigation bar */
 body {
     background-image: url("travel_website_background.jpg");
+    background-repeat: no-repeat;
+    background-size: 2560px 1600px;
   }
 *{
     margin: 0;
@@ -8,14 +10,18 @@ body {
     box-sizing: border-box;
 }
 nav {
-    background-color: #f0f0f0;
+    background-color: #09d64d;
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: larger;
   }
-  
+  #siteName{
+    font-size: 50px;
+  }
+
   nav ul {
     list-style-type: none;
     /* padding: 0; */
@@ -38,10 +44,21 @@ nav {
     /* margin: 20px; */
   }
   
-  h1 {
-    margin-bottom: 20px;
+  .intro {
+    display:block;
+    margin-top: 10%;
+    margin-left:10%;
+    color:whitesmoke;
+    font-style: italic;
+    background-color: rgba(0, 0, 76, 0.2);
+    max-width:40%;
+    overflow:visible;
+    height:auto;
   }
-  
+
+  .introP{
+    display:block;
+  }
   div {
     margin-bottom: 10px;
   }
@@ -93,3 +110,19 @@ nav {
     height: 100px;
   }
   
+  #social{
+    position: fixed;
+    left:30px;
+    bottom:30px;
+    opacity: 90%;
+  }
+
+  #contact_form{
+    display: block;
+    position: fixed;
+    x:0;
+    y:0;
+  }
+  .container{
+    width:100%;
+  }
