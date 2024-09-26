@@ -9,8 +9,9 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
-nav {
-    background-color: #09d64d;
+nav{
+    background-color: #caf3d8;
+    color:white;
     padding: 20px;
     display: flex;
     align-items: center;
@@ -120,8 +121,8 @@ nav {
   #contact_form{
     display: block;
     position: fixed;
-    x:0;
-    y:0;
+    top:15%;
+    right:15%;
   }
   .container{
     width:100%;
