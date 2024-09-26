@@ -86,16 +86,34 @@ function formatResult(result){
         c.style.color = "blue";
     }else if(typeof result == "object"){
 
+        try {
             if(result.hasOwnProperty("name")){
-            c.innerHTML = displayCityTime(result.name);
-            c.style.backgroundColor = "blue";
-            c.style.color = "white";
-            }
+                let img = document.createElement("img");
+                img.src = result.imageUrl;
+                img.style.display = "relative";
+                img.style.width = "100%";
+                let h3 = document.createElement("h3");
+                h3.innerHTML = result.name;
+                let dp = document.createElement("p");
+                dp.innerHTML = result.description;
+
+                c.innerHTML = displayCityTime(result.name);
+                c.appendChild(img);
+                c.appendChild(h3);
+                c.appendChild(dp);
+                c.style.backgroundColor = "blue";
+                c.style.color = "white";
+                }
+        } catch (error) {
+            console.log("Caught error in listing item: " + error);
+        }
+
 
         }
     console.log("this should be a div");
     console.log(c);//this looks good
     resDiv.appendChild(c);
+    resDiv.style.display = "block";
 }
 
 function displayFormatedResults(results){
@@ -124,7 +142,7 @@ function displayCityTime(city){
     let searchedLocation = getTimeZone(city);
     const options = { timeZone: searchedLocation, hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
     const formatedTime = new Date().toLocaleTimeString('en-US', options);
-    return "Current time in ${city}:" + formatedTime;
+    return `Current time in ${city}:` + formatedTime;
 }
 /******************************************88 */
 function getTimeZone(data){
