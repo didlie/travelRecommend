@@ -70,9 +70,12 @@ function formatResult(result){
     let resDiv = document.getElementById("searchResults");
     if(result.hasOwnProperty("cities")){
         let i = 0;
-        while(result.cities[i]){
-            formatResult(result.cities[i])
+        while(typeof result.cities[i] === "object" && 
+                typeof result.cities[i].name === "string"){
+            formatResult(result.cities[i]);
+            return;
         }(i++);
+        return;
     }
     //wrap contents of result in div, and return
     let c = document.createElement("div");
@@ -83,9 +86,12 @@ function formatResult(result){
         c.style.color = "blue";
     }else if(typeof result == "object"){
 
-            c.innerHTML = displayCityTime(city);
+            if(result.hasOwnProperty("name")){
+            c.innerHTML = displayCityTime(result.name);
             c.style.backgroundColor = "blue";
             c.style.color = "white";
+            }
+
         }
     console.log("this should be a div");
     console.log(c);//this looks good
@@ -97,22 +103,7 @@ function displayFormatedResults(results){
     console.log("this should be an array of objects");//console
     console.log(results);//console
     //it is an array of objects, WORKS!
-    let resDiv = document.getElementById("searchResults");
-    console.log("this should be a div container with id 'search results'");
-    console.log(resDiv)
-    let divArray = results.map(result=>formatResult(result));
-    console.log("this should be an array of divs");
-    console.log(divArray);//whats this look like
-    divArray.forEach((block)=>{
-        console.log("this is the typeof the variable for an individual result div")
-        console.log(typeof block);
-        if(typeof block == "object"){
-            console.log("this should be a block div");//console
-            console.log(block);//console
-            resDiv.appendChild(block);
-        }
-    });
-    resDiv.style.display = "block";
+    results.map(result=>formatResult(result));
     console.log("results displayed");
 }
 
@@ -129,7 +120,7 @@ function clearResults(){
 /*******function for time of searched location */
 var searchedLocation;
 
-function getCityTime(city){
+function displayCityTime(city){
     let searchedLocation = getTimeZone(city);
     const options = { timeZone: searchedLocation, hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
     const formatedTime = new Date().toLocaleTimeString('en-US', options);
@@ -147,9 +138,12 @@ function getTimeZone(data){
         cambodia : "Asia/Phnom_Penh",
         india : "Asia/Kolkata"
     }
-    zones.forEach((key,value)=> {
+    Object.keys(zones).forEach((key) => {
         if(stringData.indexOf(key) > -1){
-            retVal = zones.key;
+            console.log("this was the time zone selected in teh function");
+            console.log(zones[key]);
+            retVal = zones[key];
+            return retVal;
         }
     });
     return retVal;
