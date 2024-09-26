@@ -10,7 +10,7 @@ searchButton.onclick = searchTravelData;
 var travelData = {};//initialize as an object
 
 function searchTravelData(){ 
-
+    clearResults();
     fetch("./travel_recommendation_api.json")
     .then(response => response.json())
     .then(data => {
@@ -33,8 +33,11 @@ function matchWordsFromSearchWithResults(){
     var searchWordArray = [];
     var results  = [];
     searchWordArray = searchWordsString.split(" ");
+
 /***display all results if no search words are entered */
-console.log(searchWordArray);
+    console.log("here are all the search words");
+    console.log(searchWordArray);
+
     if(searchWordArray[0]=== ''){
         console.log("nothing in the search input");
         console.log("displaying all results");
@@ -57,41 +60,20 @@ console.log(searchWordArray);
                 results.push(isObject);
             });
         }
-
-/*** now search the specific listings arrays for each object */
-/*** from each key; match "name" from each object in the arrays***/
-/**********return the specific result from  the top-level object */
-
-        Object.keys(travelData).forEach(key => {
-            //key - of top level item
-            let arrayOfObjects = travelData[key];
-            //search each word in the result 'name'
-            arrayOfObjects.forEach(isObject => {
-            let name =  isObject.name.toLowerCase();
-            let wordArray = name.split(" ");
-            //match each word to each word in the search
-            if(wordArray[word] !== undefined){
-                    //check if the result is already in the array - no duplicates
-                    if(!results.includes(isObject)){ results.push(isObject); };
-                    //also, upgrade by pushing multiple result matches 
-                    //to the top of the results array
-            }
-            });
-            
-        });
-
-/**************continue the logic to each */
-/**** where the description matches two words or something */
-
-//som more code here
     });
 
-/******now display the results in formated blocks */
     displayFormatedResults(results);
 
 }
 
 function formatResult(result){
+    let resDiv = document.getElementById("searchResults");
+    if(result.hasOwnProperty("cities")){
+        let i = 0;
+        while(result.cities[i]){
+            formatResult(result.cities[i])
+        }(i++);
+    }
     //wrap contents of result in div, and return
     let c = document.createElement("div");
 
@@ -100,16 +82,18 @@ function formatResult(result){
         c.style.backgroundColor = "white";
         c.style.color = "blue";
     }else if(typeof result == "object"){
-        c.innerHTML = JSON.stringify(result);
-        c.style.backgroundColor = "blue";
-        c.style.color = "white";
-    }
+
+            c.innerHTML = displayCityTime(city);
+            c.style.backgroundColor = "blue";
+            c.style.color = "white";
+        }
     console.log("this should be a div");
     console.log(c);//this looks good
-    return c;
+    resDiv.appendChild(c);
 }
 
 function displayFormatedResults(results){
+
     console.log("this should be an array of objects");//console
     console.log(results);//console
     //it is an array of objects, WORKS!
@@ -141,15 +125,36 @@ function clearResults(){
     resDiv.style.display = "none";
     travelData = {};
 }
+
 /*******function for time of searched location */
 var searchedLocation;
 
-function getCityTime(){
+function getCityTime(city){
+    let searchedLocation = getTimeZone(city);
     const options = { timeZone: searchedLocation, hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric' };
     const formatedTime = new Date().toLocaleTimeString('en-US', options);
     return "Current time in ${city}:" + formatedTime;
 }
 /******************************************88 */
+function getTimeZone(data){
+    let stringData = data.toLowerCase();
+    let retVal;
+    let zones = {
+        australia : "Australia/Sydney",
+        japan : "Asia/Tokyo",
+        french : "Pacific/Tahiti",
+        brazil : "America/Sao_Paulo",
+        cambodia : "Asia/Phnom_Penh",
+        india : "Asia/Kolkata"
+    }
+    zones.forEach((key,value)=> {
+        if(stringData.indexOf(key) > -1){
+            retVal = zones.key;
+        }
+    });
+    return retVal;
+}
+
 
 
 

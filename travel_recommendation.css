@@ -127,3 +127,9 @@ nav{
   .container{
     width:100%;
   }
+
+  #searchResults{
+    max-width:500px;
+    background-color: rgba(0, 0, 76, 0.5);
+    margin-left:50%;
+  }
