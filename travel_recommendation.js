@@ -37,7 +37,16 @@ function matchWordsFromSearchWithResults(){
 console.log(searchWordArray);
     if(searchWordArray[0]=== ''){
         console.log("nothing in the search input");
-        displayAllResults();
+        console.log("displaying all results");
+        Object.keys(travelData).forEach(key=>{
+            results.push(key);
+            travelData[key].forEach(isObject => {
+                results.push(isObject);
+            });
+        });
+        console.log("this should be an array of all results");
+        console.log(results);
+        displayFormatedResults(results);
         return;//stop search
     }
 /********************heigherarchy for search */
@@ -82,39 +91,52 @@ console.log(searchWordArray);
 
 }
 
-function formatResults(result){
+function formatResult(result){
     //wrap contents of result in div, and return
     let c = document.createElement("div");
-    c.innerHTML = JSON.stringify(result);
+
+    if(typeof result == "string"){
+        c.innerHTML = result;
+        c.style.backgroundColor = "white";
+        c.style.color = "blue";
+    }else if(typeof result == "object"){
+        c.innerHTML = JSON.stringify(result);
+        c.style.backgroundColor = "blue";
+        c.style.color = "white";
+    }
+    console.log("this should be a div");
+    console.log(c);//this looks good
     return c;
 }
 
 function displayFormatedResults(results){
-    let resDiv = document.getElementById("results");
-    let divArray = results.map(result => {
-        formatResults(result);
-    });
+    console.log("this should be an array of objects");//console
+    console.log(results);//console
+    //it is an array of objects, WORKS!
+    let resDiv = document.getElementById("searchResults");
+    console.log("this should be a div container with id 'search results'");
+    console.log(resDiv)
+    let divArray = results.map(result=>formatResult(result));
+    console.log("this should be an array of divs");
+    console.log(divArray);//whats this look like
     divArray.forEach((block)=>{
-        resDiv.appendChild(block);
+        console.log("this is the typeof the variable for an individual result div")
+        console.log(typeof block);
+        if(typeof block == "object"){
+            console.log("this should be a block div");//console
+            console.log(block);//console
+            resDiv.appendChild(block);
+        }
     });
     resDiv.style.display = "block";
     console.log("results displayed");
-}
-
-function displayAllResults(){
-    //logic to display each item from the results in travelData, 
-    //starting with each array key
-    console.log("displaying all results");
-    Object.keys(travelData).forEach(key=>{
-
-    }) 
 }
 
 /***used for button to clear the results */
 /*and button to display results 
 /* and onfocus for search bar */
 function clearResults(){
-    let resDiv = document.getElementById("results");
+    let resDiv = document.getElementById("searchResults");
     resDiv.innerHTML = "";
     resDiv.style.display = "none";
     travelData = {};
