@@ -10,7 +10,15 @@ searchButton.onclick = searchTravelData;
 var travelData = {};//initialize as an object
 
 function searchTravelData(){ 
+    let resDiv = document.getElementById("")
     clearResults();
+    if(travelData.length > 2){
+        //enable caching of the travelData
+        matchWordsFromSearchWithResults();
+        resDiv.style.display = "none";
+        return;
+    }
+//else, fetch
     fetch("./travel_recommendation_api.json")
     .then(response => response.json())
     .then(data => {
@@ -55,11 +63,13 @@ function matchWordsFromSearchWithResults(){
 /********************heigherarchy for search */
 /******first check the top level object keys */
     searchWordArray.forEach((word)=>{
-        if(travelData[word] !== undefined){
-            travelData[word].forEach(isObject => {
-                results.push(isObject);
-            });
-        }
+        Object.keys(travelData).forEach(key => {
+            if(key.indexOf(word) > -1){
+                travelData[key].forEach(isObject => {
+                    results.push(isObject);
+                });
+            }
+        })
     });
 
     displayFormatedResults(results);
@@ -132,7 +142,7 @@ function clearResults(){
     let resDiv = document.getElementById("searchResults");
     resDiv.innerHTML = "";
     resDiv.style.display = "none";
-    travelData = {};
+    searchInput.value = "";
 }
 
 /*******function for time of searched location */
@@ -168,7 +178,13 @@ function getTimeZone(data){
 }
 
 
-
+searchInput.addEventListener("keyup", event => {
+    inputString = event.data;
+    let resDiv = document.getElementById("searchResults");
+    resDiv.innerHTML = "";
+    matchWordsFromSearchWithResults(inputString);
+    resDiv.style.display = "block";
+})
 
 
 
