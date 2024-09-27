@@ -187,4 +187,4 @@ searchInput.addEventListener("keyup", event => {
 })
 
 
-
+searchButton.click();
